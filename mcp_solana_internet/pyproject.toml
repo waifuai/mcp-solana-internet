@@ -1,0 +1,33 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "mcp-solana-internet"
+version = "0.0.1"
+description = "An MCP server for paid content access using direct SOL payments."
+authors = ["WaifuAI <waifuai@users.noreply.github.com>"]
+license = "MIT-0"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastmcp = "^0.1.0"
+pydantic = "^2.0"
+solders = "^0.17.0"
+httpx = "^0.26.0"
+spl-token = "^0.4.0"  #Even though we aren't using tokens directly, we need the system program for transfers
+python-dotenv = "^1.0.0"
+Flask = "^3.0.0"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.2.0"
+pytest = "^7.0"
+pytest-asyncio = "^0.21.0"
+
+[tool.ruff]
+line-length = 120
+select = ["E", "W", "F", "I", "N", "UP", "Y001"]
+ignore = ["E501", "F401"]
+
+[tool.ruff.format]
+docstring-code-line-length = "source"
