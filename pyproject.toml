@@ -9,13 +9,17 @@ description = "An MCP server for paid content access using direct SOL payments."
 authors = ["WaifuAI <waifuai@users.noreply.github.com>"]
 license = "MIT-0"
 
+packages = [
+    { include = "mcp_solana_internet" },
+]
+
 [tool.poetry.dependencies]
 python = "^3.11"
 fastmcp = "^0.1.0"
 pydantic = "^2.0"
 solders = "^0.17.0"
-httpx = "^0.26.0"
-spl-token = "^0.4.0"  #Even though we aren't using tokens directly, we need the system program for transfers
+httpx = "^0.27.0"
+ # Updated to match mcp dependency
 python-dotenv = "^1.0.0"
 Flask = "^3.0.0"
 

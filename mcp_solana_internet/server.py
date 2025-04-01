@@ -5,7 +5,6 @@ import time
 from typing import Dict, Optional
 
 import httpx
-from dotenv import load_dotenv
 from pydantic import BaseModel, Field
 from solders.hash import Hash as Blockhash
 from solders.signature import Signature
@@ -19,15 +18,7 @@ from urllib.parse import quote
 from mcp.server.fastmcp import Context, FastMCP
 from mcp_solana_internet.payments import payment_app as payments_blueprint # Import the blueprint
 
-load_dotenv()
-
-# --- Configuration ---
-RPC_ENDPOINT = os.getenv("RPC_ENDPOINT", "http://localhost:8899")
-# Placeholder: In a real application, use a secure key management system.
-PAYMENT_WALLET = Keypair.from_seed(
-    bytes([int(x) for x in os.getenv("PAYMENT_WALLET_SEED", "1" * 32).split(",")])
-)
-LAMPORTS_PER_SOL = 10**9
+from mcp_solana_internet.config import RPC_ENDPOINT, PAYMENT_WALLET, LAMPORTS_PER_SOL # Import from config
 
 
 # --- Helper Functions ---
@@ -55,11 +46,13 @@ async def has_paid_for_access(user_pubkey: Pubkey, resource_id: str) -> bool:
 
 # --- MCP Setup ---
 mcp = FastMCP(name="Solana Internet Server")
-mcp.flask_app.register_blueprint(payments_blueprint) # Register the blueprint
+# mcp.flask_app.register_blueprint(payments_blueprint) # Removed - Flask app runs separately
 
 
 # --- MCP Resources ---
-@mcp.resource("access://check")
+# @mcp.resource("access://check")
+ # Changed to tool due to parameter mismatch
+@mcp.tool() # Now treated as a tool
 async def check_access(
     context: Context,
     user_pubkey: str = Field(..., description="The user's public key."),

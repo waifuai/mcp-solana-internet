@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from urllib.parse import quote
-from mcp_solana_internet.server import LAMPORTS_PER_SOL, PAYMENT_WALLET, RPC_ENDPOINT
+from mcp_solana_internet.config import LAMPORTS_PER_SOL, PAYMENT_WALLET, RPC_ENDPOINT
+ # Import from config
 from solders.pubkey import Pubkey
 from solders.hash import Hash as Blockhash
 from solders.message import Message
