@@ -1,3 +1,27 @@
+"""
+MCP server implementation for the Solana Internet payment system.
+
+This module implements a FastMCP server that provides:
+- Payment processing and validation tools
+- Resource access control based on payment history
+- On-chain transaction validation
+- Payment history tracking and management
+
+Key components:
+- MCP tools for checking access, processing payments, and getting resource info
+- MCP resources for real-time access validation
+- Payment record management with automatic expiry
+- Integration with Solana blockchain for transaction validation
+
+The server provides tools for:
+- check_access: Verify if a user has paid for a resource
+- process_payment: Validate and record SOL payments
+- get_resource_info: Get pricing and resource information
+- get_payment_history: View user's payment history
+
+Payment records are stored in memory with automatic cleanup of expired payments
+and support for configurable payment expiry times.
+"""
 import asyncio
 import json
 import logging

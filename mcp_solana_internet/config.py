@@ -1,3 +1,22 @@
+"""
+Configuration module for the MCP Solana Internet payment system.
+
+This module handles:
+- Loading environment variables for Solana RPC endpoint and payment wallet configuration
+- Creating and validating the payment wallet from environment variables
+- Setting up logging configuration for the entire application
+- Validating all required configuration on import
+
+The module supports multiple seed formats for the payment wallet:
+- Comma-separated integers: "1,2,3,4,..."
+- Hex string format: "0x1234567890abcdef..."
+
+Environment variables required:
+- RPC_ENDPOINT: Solana RPC endpoint URL (default: http://localhost:8899)
+- PAYMENT_WALLET_SEED: Payment wallet seed in supported format
+- FLASK_DEBUG: Flask debug mode setting
+- FLASK_PORT: Flask server port (default: 5001)
+"""
 import os
 import logging
 from typing import Optional

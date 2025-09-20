@@ -1,3 +1,25 @@
+"""
+Utility functions for the MCP Solana Internet payment system.
+
+This module provides helper functions for:
+- Solana-specific operations (key validation, amount conversion)
+- Payment processing utilities (fee estimation, validation)
+- Logging setup and configuration
+- Data formatting and display utilities
+
+Key utility functions:
+- sol_to_lamports/lamports_to_sol: Convert between SOL and lamports
+- validate_pubkey/validate_signature: Validate Solana keys and signatures
+- format_sol_amount: Format SOL amounts with proper decimal places
+- truncate_pubkey/truncate_signature: Display truncated keys/signatures
+- calculate_transaction_fee_estimate: Estimate transaction fees
+- is_valid_resource_id: Validate resource IDs against allowed list
+- get_payment_expiry_info: Get payment expiry information
+- setup_logging: Configure logging for the application
+
+These utilities are used throughout the payment system for common operations
+and data validation tasks.
+"""
 # Utility functions for mcp_solana_internet
 
 import logging

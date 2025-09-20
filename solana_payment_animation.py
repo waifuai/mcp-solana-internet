@@ -1,3 +1,28 @@
+"""
+Manim animation for visualizing the Solana Payment System with MCP integration.
+
+This script creates an animated visualization that demonstrates:
+- The complete architecture of the MCP Solana Internet payment system
+- Step-by-step payment processing flow from user request to blockchain confirmation
+- Integration between Flask payment API, MCP server, and Solana blockchain
+- Visual representation of transaction creation and validation processes
+
+The animation includes:
+- System architecture overview with all components
+- Detailed payment flow with code snippets
+- Complete end-to-end transaction visualization
+- Success confirmation and system integration display
+
+Usage:
+    manim solana_payment_animation.py SolanaPaymentAnimation
+    # or for higher quality:
+    manim -pqh solana_payment_animation.py SolanaPaymentAnimation
+
+Requirements:
+- Manim Community installed (pip install manim)
+- Python 3.7+
+- Output generated in media/videos/ directory
+"""
 from manim import *
 import numpy as np
 

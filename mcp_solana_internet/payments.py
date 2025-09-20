@@ -1,3 +1,26 @@
+"""
+Flask-based payment API for the MCP Solana Internet system.
+
+This module provides a Flask web server with endpoints for:
+- Creating Solana payment transactions through Solana Actions
+- Processing payment requests with proper validation
+- Handling CORS for cross-origin web requests
+- Validating payment inputs and resource IDs
+
+Key endpoints:
+- GET/POST /process_payment_action: Handle Solana Actions for payment processing
+- GET /health: Health check endpoint for service monitoring
+
+The module integrates with the Solana blockchain to:
+- Create unsigned payment transactions
+- Validate payment amounts and resource IDs
+- Generate proper transaction instructions for SOL transfers
+
+Configuration is loaded from the config module and supports:
+- Multiple valid resource IDs with configurable pricing
+- Payment amount limits (min/max)
+- Request timeouts for RPC calls
+"""
 import asyncio
 import json
 import logging
