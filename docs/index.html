@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>mcp-solana-internet Documentation</title>
+<style>
+
+:root {
+  --bg: #0d1117;
+  --card-bg: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --text-muted: #8b949e;
+  --accent: #58a6ff;
+  --accent2: #7ee787;
+  --accent3: #d2a8ff;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 2rem; }
+.container { max-width: 1100px; margin: 0 auto; }
+header { text-align: center; margin-bottom: 3rem; padding: 2rem 0; border-bottom: 1px solid var(--border); }
+header h1 { font-size: 2.5rem; font-weight: 700; background: linear-gradient(135deg, var(--accent), var(--accent3)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 0.5rem; }
+header p { color: var(--text-muted); font-size: 1.1rem; }
+section { margin-bottom: 2.5rem; }
+h2 { font-size: 1.4rem; margin-bottom: 0.75rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border); display: flex; align-items: baseline; gap: 0.5rem; }
+.count { font-size: 0.85rem; color: var(--text-muted); font-weight: 400; }
+.section-desc { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem; }
+.link-list { display: flex; flex-direction: column; gap: 0.25rem; }
+.link-list a { color: var(--accent); text-decoration: none; padding: 0.4rem 0.75rem; border-radius: 6px; transition: background 0.15s; font-size: 0.95rem; }
+.link-list a:hover { background: var(--card-bg); text-decoration: underline; }
+footer { text-align: center; color: var(--text-muted); font-size: 0.8rem; padding-top: 2rem; border-top: 1px solid var(--border); margin-top: 2rem; }
+
+</style>
+
+</head>
+<body>
+<div class="container">
+
+<header>
+<h1>mcp-solana-internet</h1>
+<p>GitHub Pages documentation</p>
+</header>
+
+<section>
+<h2>Project Description</h2>
+<h1>MCP Solana Internet - Enhanced Payment System</h1>
+<p>A robust Solana-based payment system with MCP (Model Context Protocol) integration for processing payments and managing resource access.</p>
+<h2>🚀 Features</h2>
+<ul>
+<li><strong>Solana Blockchain Integration</strong>: Direct SOL transfers with on-chain validation</li>
+<li><strong>MCP Server</strong>: Tools for access control and payment processing</li>
+<li><strong>Flask Payment API</strong>: RESTful endpoints for payment actions</li>
+<li><strong>Resource Management</strong>: Configurable resource prices and access control</li>
+<li><strong>Payment History</strong>: In-memory payment tracking with expiry</li>
+<li><strong>Comprehensive Validation</strong>: Input validation, transaction verification, and error handling</li>
+<li><strong>Logging</strong>: Detailed logging for debugging and monitoring</li>
+<li><strong>CORS Support</strong>: Cross-origin request handling for web integration</li>
+</ul>
+<h2>📁 Project Structure</h2>
+<pre><code>.
+├── config.py          # Configuration and wallet management
+├── payments.py        # Flask payment API endpoints
+├── server.py          # MCP server with payment tools
+├── utils.py           # Utility functions for Solana operations
+├── __init__.py        # Package initialization
+├── .env              # Environment variables (create this)
+└── README.md         # This file
+</code></pre>
+<h2>⚙️ Configuration</h2>
+<h3>Environment Variables</h3>
+<p>Create a <code>.env</code> file in the project root:</p>
+<pre><code class="language-env"># Solana RPC endpoint
+RPC_ENDPOINT=http://localhost:8899
+
+# Payment wallet seed (comma-separated integers or hex with 0x prefix)
+# Example: PAYMENT_WALLET_SEED=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32
+# Or hex: PAYMENT_WALLET_SEED=0x1234567890abcdef...
+
+# Flask configuration
+FLASK_DEBUG=true
+FLASK_PORT=5001
+</code></pre>
+<h3>Resource Prices</h3>
+<p>Resources and their prices are configured in <code>server.py</code>:</p>
+<pre><code class="language-python">resource_prices = {
+    &quot;resource_1&quot;: 0.1,
+    &quot;resource_2&quot;: 0.5,
+    &quot;premium_content&quot;: 1.0,
+    &quot;basic_content&quot;: 0.05,
+    &quot;pro_content&quot;: 2.0,
+}
+</code></pre>
+<h2>🛠️ Installation</h2>
+<ol>
+<li><strong>Install dependencies:</strong></li>
+</ol>
+<pre><code class="language-bash"># Using uv (recommended)
+python -m uv venv .venv
+source .venv/Scripts/activate  # On Windows
+.venv/Scripts/python.exe -m uv pip install -e .
+</code></pre>
+<ol>
+<li>
+<p><strong>Set up environment variables:</strong>
+Create a <code>.env</code> file with the required configuration.</p>
+</li>
+<li>
+<p><strong>Run the services:</strong></p>
+</li>
+</ol>
+<p>Start the payment API server:</p>
+<pre><code class="language-bash">python payments.py
+</code></pre>
+<p>Start the MCP server (in another terminal):</p>
+<pre><code class="language-bash">python server.py
+</code></pre>
+<h2>💰 Payment Flow</h2>
+<h3>1. Check Access</h3>
+<p>Use the MCP <code>check_access</code> tool to verify if a user has paid for a resource:</p>
+<pre><code class="language-python"># Check if user has access to premium content
+result = await check_access(
+    user_pubkey=&quot;UserPublicKeyHere&quot;,
+    resource_id=&quot;premium_content&quot;
+)
+</code></pre>
+<h3>2. Process Payment</h3>
+<p>If access is denied, the user needs to make a payment:</p>
+<pre><code class="language-python"># Process a completed payment transaction
+result = await process_payment(
+    amount_sol=1.0,
+    payment_transaction=&quot;TransactionSignatureHere&quot;,
+    client_ip=&quot;127.0.0.1&quot;,
+    resource_id=&quot;premium_content&quot;,
+    user_pubkey=&quot;UserPublicKeyHere&quot;
+)
+</code></pre>
+<h3>3. Payment API</h3>
+<p>The Flask API provides endpoints for Solana Actions:</p>
+<ul>
+<li><code>GET /process_payment_action</code> - Get payment action metadata</li>
+<li><code>POST /process_payment_action</code> - Create payment transaction</li>
+<li><code>GET /health</code> - Health check</li>
+</ul>
+<h2>🔧 API Endpoints</h2>
+<h3>Payment Action Metadata</h3>
+<pre><code class="language-http">GET /process_payment_action
+</code></pre>
+<p>Response:</p>
+<pre><code class="language-json">{
+  &quot;type&quot;: &quot;action&quot;,
+  &quot;icon&quot;: &quot;https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png&quot;,
+  &quot;title&quot;: &quot;Process Payment&quot;,
+  &quot;description&quot;: &quot;Make a SOL payment to access premium content.&quot;,
+  &quot;label&quot;: &quot;Pay with SOL&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;name&quot;: &quot;amount_sol&quot;,
+      &quot;type&quot;: &quot;number&quot;,
+      &quot;label&quot;: &quot;Amount of SOL to pay&quot;,
+      &quot;min&quot;: 0.001,
+      &quot;max&quot;: 1000
+    },
+    {
+      &quot;name&quot;: &quot;resource_id&quot;,
+      &quot;type&quot;: &quot;select&quot;,
+      &quot;label&quot;: &quot;Resource ID&quot;,
+      &quot;options&quot;: [
+        {&quot;label&quot;: &quot;Resource 1&quot;, &quot;value&quot;: &quot;resource_1&quot;},
+        {&quot;label&quot;: &quot;Resource 2&quot;, &quot;value&quot;: &quot;resource_2&quot;},
+        {&quot;label&quot;: &quot;Premium Content&quot;, &quot;value&quot;: &quot;premium_content&quot;}
+      ]
+    }
+  ]
+}
+</code></pre>
+<h3>Create Payment Transaction</h3>
+<pre><code class="language-http">POST /process_payment_action
+Content-Type: application/json
+
+{
+  &quot;amount_sol&quot;: 1.0,
+  &quot;resource_id&quot;: &quot;premium_content&quot;,
+  &quot;account&quot;: &quot;UserPublicKeyHere&quot;
+}
+</code></pre>
+<h2>🛡️ Validation &amp; Security</h2>
+<h3>Payment Validation</h3>
+<ul>
+<li><strong>Amount Limits</strong>: 0.001 SOL minimum, 1000 SOL maximum</li>
+<li><strong>Resource Validation</strong>: Only predefined resources are accepted</li>
+<li><strong>Transaction Verification</strong>: Full on-chain validation including:</li>
+<li>Transaction existence</li>
+<li>Correct destination address</li>
+<li>Sufficient payment amount</li>
+<li>Valid instruction structure</li>
+</ul>
+<h3>Error Handling</h3>
+<ul>
+<li>Comprehensive input validation</li>
+<li>Graceful error responses with detailed messages</li>
+<li>Proper HTTP status codes</li>
+<li>Detailed logging for debugging</li>
+</ul>
+<h2>📊 Payment History</h2>
+<h3>View Payment History</h3>
+<pre><code class="language-python"># Get all payments for a user
+history = await get_payment_history(
+    user_pubkey=&quot;UserPublicKeyHere&quot;
+)
+
+# Get payments for specific resource
+history = await get_payment_history(
+    user_pubkey=&quot;UserPublicKeyHere&quot;,
+    resource_id=&quot;premium_content&quot;
+)
+</code></pre>
+<h3>Payment Expiry</h3>
+<ul>
+<li>Payments expire after 24 hours by default</li>
+<li>Automatic cleanup of expired records</li>
+<li>Configurable expiry time via <code>PAYMENT_EXPIRY_HOURS</code></li>
+</ul>
+<h2>🧪 Testing</h2>
+<h3>Health Check</h3>
+<pre><code class="language-bash">curl http://localhost:5001/health
+</code></pre>
+<h3>Test Payment Flow</h3>
+<ol>
+<li>Check access for a resource</li>
+<li>If denied, create a payment transaction</li>
+<li>Submit the signed transaction</li>
+<li>Verify access is now granted</li>
+</ol>
+<h2>🔍 MCP Tools</h2>
+<h3>Available Tools</h3>
+<ol>
+<li><strong><code>check_access</code></strong> - Check if user has paid for resource</li>
+<li><strong><code>process_payment</code></strong> - Process and validate SOL payment</li>
+<li><strong><code>get_resource_info</code></strong> - Get resource prices and information</li>
+<li><strong><code>get_payment_history</code></strong> - View user's payment history</li>
+</ol>
+<h3>Tool Usage Example</h3>
+<pre><code class="language-python">from mcp_solana_internet import check_access, process_payment
+
+# Check access
+access_result = await check_access(
+    user_pubkey=&quot;EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v&quot;,
+    resource_id=&quot;premium_content&quot;
+)
+
+if not access_result[&quot;access&quot;]:
+    print(f&quot;Payment required: {access_result['payment_amount_sol']} SOL&quot;)
+    print(f&quot;Payment URL: {access_result['payment_url']}&quot;)
+</code></pre>
+<h2>🐛 Troubleshooting</h2>
+<h3>Common Issues</h3>
+<ol>
+<li>
+<p><strong>"Invalid public key"</strong>: Ensure the public key is a valid Solana address (32 bytes, base58 encoded)</p>
+</li>
+<li>
+<p><strong>"Transaction not found"</strong>: The transaction may not be confirmed yet. Wait for confirmation.</p>
+</li>
+<li>
+<p><strong>"Insufficient payment"</strong>: The payment amount is less than required for the resource.</p>
+</li>
+<li>
+<p><strong>"RPC Error"</strong>: Check that the Solana RPC endpoint is accessible and functioning.</p>
+</li>
+</ol>
+<h3>Logs</h3>
+<p>Check the console output for detailed error messages and transaction information.</p>
+<h2>📝 Development</h2>
+<h3>Adding New Resources</h3>
+<ol>
+<li>Add the resource to <code>resource_prices</code> in <code>server.py</code></li>
+<li>Update the <code>VALID_RESOURCE_IDS</code> in <code>payments.py</code></li>
+</ol>
+<h3>Custom Validation</h3>
+<p>Extend the validation functions in <code>utils.py</code> for custom business logic.</p>
+<h3>Database Integration</h3>
+<p>For production use, replace the in-memory payment storage with a proper database.</p>
+<h2>🤝 Contributing</h2>
+<ol>
+<li>Fork the repository</li>
+<li>Create a feature branch</li>
+<li>Make your changes</li>
+<li>Add tests if applicable</li>
+<li>Submit a pull request</li>
+</ol>
+<h2>📄 License</h2>
+<p>This project is licensed under the MIT-0 License - see the LICENSE file for details.</p>
+<h2>⚠️ Production Considerations</h2>
+<ol>
+<li><strong>Security</strong>: Use environment variables for sensitive configuration</li>
+<li><strong>Database</strong>: Replace in-memory storage with a persistent database</li>
+<li><strong>Monitoring</strong>: Add proper logging and monitoring</li>
+<li><strong>Rate Limiting</strong>: Implement rate limiting to prevent abuse</li>
+<li><strong>Backup</strong>: Regular backups of payment records</li>
+<li><strong>Key Management</strong>: Use secure key management systems for production wallets</li>
+</ol>
+</section>
+
+<section>
+<h2>Source Code</h2>
+<p class="section-desc">View the repository on GitHub.</p>
+<div class="link-list">
+<a href="https://github.com/waifuai/mcp-solana-internet">GitHub Repository</a>
+</div>
+</section>
+
+
+<footer>
+<p>Generated GitHub Pages for AI agent crawlability.</p>
+</footer>
+
+</div>
+</body>
+</html>
