@@ -41,7 +41,7 @@ from solders.transaction import Transaction
 from solders.system_program import transfer, TransferParams
 from urllib.parse import quote
 
-from mcp.server.fastmcp import Context, FastMCP
+from mcp.server.mcpserver import Context, MCPServer
 from config import RPC_ENDPOINT, PAYMENT_WALLET, LAMPORTS_PER_SOL
 
 # Set up logging
@@ -195,8 +195,8 @@ def record_payment(user_pubkey: str, resource_id: str, amount_sol: float, tx_sig
     logger.info(f"Payment recorded: {amount_sol} SOL for {resource_id} by {user_pubkey}")
 
 
-# --- MCP Setup ---
-mcp = FastMCP(name="Solana Internet Server")
+# Initialize MCPServer
+mcp = MCPServer(name="Solana Internet Server")
 # mcp.flask_app.register_blueprint(payments_blueprint) # Removed - Flask app runs separately
 
 
